@@ -128,14 +128,14 @@
                   <!-- Card Header - Dropdown -->
                   <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Aliran Dana</h6>
+
                     <div class="dropdown">
                       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pilih Bulan</button>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Januari</a>
-                        <a class="dropdown-item" href="#">April</a>
-                        <a class="dropdown-item" href="#">September</a>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dropdownMenu">
+                          <!-- Dropdown items will be dynamically added here -->
                       </div>
                     </div>
+              
                   </div>
                   <!-- Card Body -->
                   <div class="card-body">
@@ -392,7 +392,13 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+
+
+
+    <script src="js/Chart/index/piechartAlirandana.js"></script>
+
+
+
     <script src="utils/sidebar/sidebarload.js"></script>
     <script src="utils/topbar/topbarload.js"></script>
   </body>

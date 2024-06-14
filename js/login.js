@@ -27,12 +27,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(responseData)
                 console.log('Login successful');
                 console.log('Access Token:', accessToken);
+
+                 // Decode the JWT to access the payload
+                 const decodedToken = jwt_decode(accessToken);
+                 console.log('Role:', decodedToken.role);
                 
                 // Set the access_token on a cookie
                 document.cookie = `access_token=${accessToken}; path=/; max-age=3600`; // Cookie expires in 1 hour
                 
                 // Redirect to the dashboard page
-                window.location.href = 'indexx.html';
+
+                if (parseInt(decodedToken.role,10) > 1) {
+                    window.location.href = 'indexx.html';
+                    
+                    }else{
+                        
+                        window.location.href = 'index.html';
+
+                }
             } else {
                 // Handle login error
                 console.error('Login failed');
