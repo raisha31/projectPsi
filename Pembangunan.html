@@ -212,98 +212,32 @@
           <!-- Begin Page Content -->
           <div class="container-fluid">
             <!-- Page Heading -->
-            <h3 class="h3 mb-2 text-gray-800">PROGRESS PEMBANGUNAN</h3>
-
-            <div class="row">
-              <!-- Earnings (Monthly) Card Example -->
-              <div class="col-xl-4 col-md-6 mb-4">
-                <div class="button-card border-bottom-danger shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">PROYEK BELUM DIDANAI</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                      </div>
-                      
-                      <div class="col-auto">
-                        <i class="fas fa-4x text-gray-300">4</i>
-                      </div>
+            <h3 class="h3 mb-5 text-gray-800">TAMBAH PEMBANGUNAN</h3>
+        
+            <div class="px-5">
+                
+                <form>
+                    <div class="form-group">
+                        <label for="inputNama">Nama</label>
+                        <input type="text" class="form-control" id="inputNama" placeholder="Nama">
                     </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Earnings (Monthly) Card Example -->
-              <div class="col-xl-4 col-md-6 mb-4">
-                <div class="button-card border-bottom-warning shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning mb-1">PROYEK DALAM PEMBANGUNAN</div>
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-4x text-gray-300">70</i>
-                      </div>
-                      
+                    <div class="form-group">
+                        <label for="inputLokasi">Lokasi</label>
+                        <input type="text" class="form-control" id="inputLokasi" placeholder="Lokasi">
                     </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Earnings (Monthly) Card Example -->
-              <div class="col-xl-4 col-md-6 mb-4">
-                <div class="button-card border-bottom-success shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success mb-1">PROYEK SELESAI</div>
-                        <div class="row no-gutters align-items-center">
-                          <div class="col-auto">
-                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"></div>
-                          </div>
-                          
-                        </div>
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-4x text-gray-300">100</i>
-                      </div>
+                    <div class="form-group">
+                        <label for="inputDana">Dana Pembangunan</label>
+                        <input type="text" class="form-control" id="inputDana" placeholder="Dana Pembangunan">
                     </div>
-                  </div>
-                </div>
-              </div>
-
-              
-
-            <!-- Gauge Chart Dynamicly -->
-
-            <!-- <div class="col-xl-4 col-lg-5">
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">gauge Chart</h6>
-                </div>
-                <div class="card-body">
-                  <div id="canvas-holder" style="width:100%">
-                    <canvas id="chart"></canvas>
-                  </div>
-                  <button id="randomizeData">Randomize Data</button>
-                </div>
-              </div>
-            </div> -->
-  
-            <div class="row px-2" id="chartRow">
-
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
-
-          </div>
-          <!-- /.container-fluid -->
+        </div>
+        
+        <!-- /.container-fluid -->
         </div>
         <!-- End of Main Content -->
 
-
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <div class="floating-container">
-          <a class="floating-button" href="progressAddPembangunan.html">+</a>
-        </div>
         <!-- Footer -->
         <footer class="sticky-footer bg-white">
           <div class="container my-auto">
@@ -322,8 +256,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
-
-
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -362,6 +294,6 @@
     <script src="js/demo/chart-pie-demo.js"></script>
     <script src="js/demo/chart-bar-demo.js"></script>
     <script src="utils/sidebar/sidebarload.js"></script>
-    <script src="js/demo/chart-gauge-demo.js"></script> 
+
   </body>
 </html>
