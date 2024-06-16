@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log(data)
     
     // Process the data here
-    const labels = data.map(item => item.bulan); // Assuming your data has a "month" field
+    const labels = data.map(item => getMonthName(item.bulan)); // Assuming your data has a "month" field
     const uangTotal = data.map(item => item.uang_sekarang); // Assuming your data has a "uangTotal" field
     const uangMasuk = data.map(item => item.uang_masuk); // Assuming your data has a "uangMasuk" field
     const uangKeluar = data.map(item => item.uang_keluar); // Assuming your data has a "uangKeluar" field
@@ -162,4 +162,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error("Error fetching data: ", error);
   }
 })
+
+
+function getMonthName(month) {
+  const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+  return monthNames[parseInt(month) - 1];
+}
+
 
