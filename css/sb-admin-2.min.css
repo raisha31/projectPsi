@@ -10368,6 +10368,7 @@ body.sidebar-toggled footer.sticky-footer {
     overflow-y: auto;
     z-index: 1000; /* Ensure the sidebar is above other content */
     width: 250px; /* Ensure a fixed width for the sidebar */
+    padding: 0px;
   }
 
   #content-wrapper {

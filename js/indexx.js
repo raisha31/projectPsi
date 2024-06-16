@@ -12,7 +12,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const accessToken = getCookie('access_token');
 
         if (!accessToken) {
-            throw new Error('Access token not found');
+            // Redirect to login page if access token is not found
+            window.location.href = '/login.html';
+            return;
         }
 
         // Fetch the data from the server (using a simulated endpoint here)
