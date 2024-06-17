@@ -210,43 +210,47 @@
           <!-- End of Topbar -->
 
           <!-- Begin Page Content -->
-          <div class="container-fluid">
-            <!-- Page Heading -->
-            <h3 class="h3 mb-2 text-gray-800">PEMBANGUNAN</h3>
-
-            <div class="row">
-
-              
-
-            <!-- Gauge Chart Dynamicly -->
-
-            <!-- <div class="col-xl-4 col-lg-5">
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">gauge Chart</h6>
-                </div>
-                <div class="card-body">
-                  <div id="canvas-holder" style="width:100%">
-                    <canvas id="chart"></canvas>
-                  </div>
-                  <button id="randomizeData">Randomize Data</button>
-                </div>
+              <div class="mb-3 px-2">
+                <a id="backbutton" class="btn btn-lg text-center" href="Pembangunan.html"><span><i class="fa fa-arrow-left fa-3x"></i></span></a>
               </div>
-            </div> -->
-  
-            <div class="row" id="chartRow">
-            </div>
+          
+          <div class="container-fluid">
 
-          </div>
-          <!-- /.container-fluid -->
+            <!-- Page Heading -->
+            <h3 class="h3 mb-5 text-gray-800">Add Pembangunan</h3>
+            <form id="FormAddPembangunan">
+                <div class="form-group row">
+                    <label for="inputNama" class="col-sm-4 col-form-label">Nama Pembangunan</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="inputNama" placeholder="Nama Pembangunan">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputLokasi" class="col-sm-4 col-form-label">Lokasi</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="inputLokasi" placeholder="Lokasi">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputDana" class="col-sm-4 col-form-label">Dana yang Digunakan</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="inputDana" placeholder="Dana yang Digunakan">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-12 text-right">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+            
+            
+        </div>
+        
+        <!-- /.container-fluid -->
         </div>
         <!-- End of Main Content -->
 
-
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <div class="floating-container">
-          <a class="floating-button" href="PembangunanAdd.html">+</a>
-        </div>
         <!-- Footer -->
         <footer class="sticky-footer bg-white">
           <div class="container my-auto">
@@ -265,8 +269,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
-
-
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -301,11 +303,8 @@
     <!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
-    <script src="js/demo/chart-bar-demo.js"></script>
     <script src="utils/sidebar/sidebarload.js"></script>
+    <script src="js/AddPembangunan.js"></script>
 
-    <script src="js/Pembangunan.js"></script>
   </body>
 </html>

@@ -52,13 +52,15 @@ async function fetchData() {
       window.location.href = "/login.html";
       return;
     }
-    const response = await fetch("http://localhost:3002/progres/pembangunans", {
+    const response = await fetch("http://localhost:3002/pembangunans", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
     const result = await response.json();
     if (result.msg === "Query Successfully") {
+
+      
       populateSelect(result.data);
     } else {
       console.error("Failed to fetch data:", result);
@@ -70,12 +72,14 @@ async function fetchData() {
 
 // Function to populate the select element
 function populateSelect(data) {
+
+  console.log(data)
   const selectElement = document.getElementById("inputNama");
   data.forEach((item) => {
     if (item.progress_pembangunan !== 100) {
       const option = document.createElement("option");
       option.textContent = item.nama_pembangunan;
-      option.value = item.id_pembangunan;
+      option.value = item.id;
       selectElement.appendChild(option);
     }
   });
@@ -93,3 +97,23 @@ function getCookie(name) {
   }
   return null;
 }
+
+
+document.getElementById('inputDana').addEventListener('input', function (e) {
+  // Remove non-numeric characters
+  let value = e.target.value.replace(/\D/g, '');
+  
+  // Format the number with dots as thousand separators
+  e.target.value = formatRupiah(value);
+});
+
+function formatRupiah(value) {
+  // Convert the value to a string and split into integer and decimal parts if any
+  let stringValue = value.toString();
+  
+  // Format the integer part with dots as thousand separators
+  let formattedValue = stringValue.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  
+  return formattedValue;
+}
+
