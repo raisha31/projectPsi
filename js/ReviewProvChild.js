@@ -7,33 +7,52 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('No access token found in cookies');
     }
 
-    document.getElementById('generateReviewBtn').addEventListener('click', () => {
-        generateNewReview();
-    });
+    const generateReviewBtn = document.getElementById('generateReviewBtn');
+    const loadingBtn = document.getElementById('loadingBtn');
+
+    generateReviewBtn.addEventListener('click', generateNewReview);
 });
 
-function fetchReviewData() {
-    console.log("masuk pak")
-    fetch('http://localhost:3002/rekomendasiAI', {
-        headers: {
-            'Authorization': 'Bearer ' + getCookie('access_token')
+async function fetchReviewData() {
+    console.log("Attempting to fetch data...");
+    const accessToken = getCookie('access_token');
+
+    if (!accessToken) {
+        console.error('Access token is missing.');
+        return;
+    }
+
+    try {
+        const response = await fetch('http://localhost:3002/rekomendasiAI', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.msg === 'Query Successful') {
+
+        const data = await response.json();
+
+        if (data.msg === 'Query Successfully') {
+            console.log('Data fetched successfully:', data.data);
             populateCards(data.data);
         } else {
-            console.error('Failed to fetch data');
+            console.error('Failed to fetch data:', data);
         }
-    })
-    .catch(error => {
+    } catch (error) {
         console.error('Error:', error);
-    });
+    }
 }
 
 async function generateNewReview() {
+    const generateReviewBtn = document.getElementById('generateReviewBtn');
+    const loadingBtn = document.getElementById('loadingBtn');
+
     try {
+        showLoading(generateReviewBtn, loadingBtn);
         const response = await fetch('http://localhost:3002/askAi', {
             method: 'POST',
             headers: {
@@ -46,13 +65,23 @@ async function generateNewReview() {
         }
         const responseData = await response.json(); // Wait for the JSON parsing to complete
         console.log(responseData); // Log the response data
-        fetchReviewData()
+        await fetchReviewData();
     } catch (error) {
         console.error('Error:', error);
+    } finally {
+        hideLoading(generateReviewBtn, loadingBtn);
     }
 }
 
+function showLoading(generateReviewBtn, loadingBtn) {
+    generateReviewBtn.style.display = 'none';
+    loadingBtn.style.display = 'inline-block';
+}
 
+function hideLoading(generateReviewBtn, loadingBtn) {
+    generateReviewBtn.style.display = 'inline-block';
+    loadingBtn.style.display = 'none';
+}
 
 function getCookie(name) {
     const cookieString = document.cookie;
@@ -84,8 +113,8 @@ function populateCards(data) {
                 <div class="card-body">
                     <h5 class="card-title">${item.asal_daerah}</h5>
                     <p class="card-text">Kondisi: ${item.kondisi}%</p>
-                    <p class="card-text">Alasan: ${truncateText (item.alasan,50)}</p>
-                    <p class="card-text">Rekomendasi: ${truncateText( item.rekomendasi_ai,50)}</p>
+                    <p class="card-text">Alasan: ${truncateText(item.alasan, 50)}</p>
+                    <p class="card-text">Rekomendasi: ${truncateText(item.rekomendasi_ai, 50)}</p>
                 </div>
             </div>
         `;
