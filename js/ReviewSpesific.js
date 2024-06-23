@@ -2,8 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const accessToken = getCookie('access_token');
     let selectedType = 'Keuangan'; // Default type
 
+    const params = new URLSearchParams(window.location.search);
+    const rekomendasi_ke = params.get('id');
+    console.log(rekomendasi_ke)
+    selectedType = params.get('tipe')
+
     if (accessToken) {
-        fetchReviewData(selectedType);
+        fetchReviewData(selectedType,rekomendasi_ke);
     } else {
         console.error('No access token found in cookies');
     }
@@ -17,15 +22,18 @@ document.addEventListener('DOMContentLoaded', () => {
     dropdownItems.forEach(item => {
         item.addEventListener('click', () => {
             selectedType = item.getAttribute('data-type');
-            fetchReviewData(selectedType);
+            fetchReviewData(selectedType,rekomendasi_ke);
         });
     });
 });
 
-async function fetchReviewData(type) {
+async function fetchReviewData(type,rekomendasi_ke) {
     console.log("Attempting to fetch data...");
     const accessToken = getCookie('access_token');
     console.log(type)
+
+
+
 
     if (!accessToken) {
         console.error('Access token is missing.');
@@ -33,7 +41,7 @@ async function fetchReviewData(type) {
     }
 
     try {
-        const response = await fetch(`http://localhost:3002/rekomendasiAI?type=${type}`, {
+        const response = await fetch(`http://localhost:3002/rekomendasiAI/${rekomendasi_ke}?type=${type}`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + accessToken
@@ -48,7 +56,7 @@ async function fetchReviewData(type) {
 
         if (data.msg === 'Query Successfully') {
             console.log('Data fetched successfully:', data.data);
-            populateCards(data.data,type);
+            populateCards(data.data);
         } else {
             console.error('Failed to fetch data:', data);
         }
@@ -114,23 +122,21 @@ function truncateText(text, maxLength) {
     return text;
 }
 
-function populateCards(data,type) {
+function populateCards(data) {
     const chartRow = document.getElementById('chartRow');
     chartRow.innerHTML = ''; // Clear existing content
     data.forEach(item => {
         const card = document.createElement('div');
-        card.className = 'col-md-6 col-lg-3 mb-4';
+        card.className = 'col mb-4 px-5';
         card.innerHTML = `
-           <a href="ReviewProvSpesific.html?id=${item.rekomendasi_ke}&&tipe=${type}">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">${item.asal_daerah}</h5>
-                        <p class="card-text">Kondisi: ${item.kondisi}%</p>
-                        <p class="card-text">Alasan: ${truncateText(item.alasan, 50)}</p>
-                        <p class="card-text">Rekomendasi: ${truncateText(item.rekomendasi_ai, 50)}</p>
-                    </div>
+            <div class="card" style="width: 100%; ">
+                <div class="card-body">
+                    <h5 class="card-title">${item.asal_daerah}</h5>
+                    <p class="card-text">Kondisi: ${item.kondisi}%</p>
+                    <p class="card-text">Alasan: ${item.alasan}</p>
+                    <p class="card-text">Rekomendasi: ${item.rekomendasi_ai}</p>
                 </div>
-            </a>
+            </div>
         `;
         chartRow.appendChild(card);
     });
