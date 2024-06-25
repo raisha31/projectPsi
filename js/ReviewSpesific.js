@@ -1,3 +1,5 @@
+
+let pesan = null
 document.addEventListener('DOMContentLoaded', () => {
     const accessToken = getCookie('access_token');
     let selectedType = 'Keuangan'; // Default type
@@ -25,6 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
             fetchReviewData(selectedType,rekomendasi_ke);
         });
     });
+
+    document.getElementById('sendMessageBtn').addEventListener('click', () => sendMessage(rekomendasi_ke,pesan));
 });
 
 async function fetchReviewData(type,rekomendasi_ke) {
@@ -56,6 +60,7 @@ async function fetchReviewData(type,rekomendasi_ke) {
 
         if (data.msg === 'Query Successfully') {
             console.log('Data fetched successfully:', data.data);
+            pesan = data.data[0].id
             populateCards(data.data);
         } else {
             console.error('Failed to fetch data:', data);
@@ -141,3 +146,41 @@ function populateCards(data) {
         chartRow.appendChild(card);
     });
 }
+
+function sendMessage(rekomendasi_ke,pesan) {
+    // Define the message data
+    const messageData = {
+        isi_rekomendasi: pesan,
+        rekomendasi_ke: rekomendasi_ke
+    };
+
+    // Get the access_token cookie
+    const accessToken = getCookie('access_token');
+
+    if (!accessToken) {
+        alert('No access token found!');
+        return;
+    }
+
+    // Send the message data using fetch
+    fetch('http://localhost:3002/send/rekomendasiAI', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        },
+        body: JSON.stringify(messageData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        alert('Message sent successfully!');
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert('Error sending message');
+    });
+}
+
+
+
