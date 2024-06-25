@@ -1,5 +1,3 @@
-
-
 // Set new default font family and font color to mimic Bootstrap's default styling
 (Chart.defaults.global.defaultFontFamily = "Nunito"), '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = "#858796";
@@ -30,30 +28,31 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 
 // Function to fetch data from API
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener("DOMContentLoaded", async () => {
   try {
-      // Get access token from cookie
-      const accessToken = getCookie('access_token');
+    const accessToken = getCookie("access_token");
 
-      if (!accessToken) {
-          throw new Error('Access token not found');
-      }
-    const response = await fetch('http://localhost:3002/statistic/dompet', {
-        headers: {
-            'Authorization': `Bearer ${accessToken}`
-        }
+    if (!accessToken) {
+      // Redirect to login page if access token is not found
+      window.location.href = "/login.html";
+      return;
+    }
+    const response = await fetch("http://localhost:3002/statistic/dompet", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
 
     const responsedata = await response.json();
-    const data = responsedata.data
+    const data = responsedata.data;
 
-    console.log(data)
-    
+    console.log(data);
+
     // Process the data here
-    const labels = data.map(item => getMonthName(item.bulan)); // Assuming your data has a "month" field
-    const uangTotal = data.map(item => item.uang_sekarang); // Assuming your data has a "uangTotal" field
-    const uangMasuk = data.map(item => item.uang_masuk); // Assuming your data has a "uangMasuk" field
-    const uangKeluar = data.map(item => item.uang_keluar); // Assuming your data has a "uangKeluar" field
+    const labels = data.map((item) => getMonthName(item.bulan)); // Assuming your data has a "month" field
+    const uangTotal = data.map((item) => item.uang_sekarang); // Assuming your data has a "uangTotal" field
+    const uangMasuk = data.map((item) => item.uang_masuk); // Assuming your data has a "uangMasuk" field
+    const uangKeluar = data.map((item) => item.uang_keluar); // Assuming your data has a "uangKeluar" field
     // Get the maximum value from uang_sekarang
     const max = Math.max(...uangTotal);
     // Create the chart
@@ -161,12 +160,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   } catch (error) {
     console.error("Error fetching data: ", error);
   }
-})
-
+});
 
 function getMonthName(month) {
   const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
   return monthNames[parseInt(month) - 1];
 }
-
-

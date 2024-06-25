@@ -6,6 +6,12 @@ let selectedType = "Keuangan"; // Default type
 document.addEventListener("DOMContentLoaded", () => {
   const accessToken = getCookie("access_token");
 
+  if (!accessToken) {
+    // Redirect to login page if access token is not found
+    window.location.href = "/login.html";
+    return;
+  }
+
   if (accessToken) {
     fetchReviewData(selectedType);
   } else {
@@ -121,19 +127,19 @@ function truncateText(text, maxLength) {
 }
 
 function populateCards(data, type) {
-    const chartRow = document.getElementById("chartRow");
-    chartRow.innerHTML = ""; // Clear existing content
-  
-    data.forEach((item) => {
-      const card = document.createElement("div");
-      card.className = "col-md-6 col-lg-3 mb-4";
-  
-      const asalDaerah = item.asal_daerah || "N/A";
-      const kondisi = item.kondisi !== null ? item.kondisi + "%" : "N/A";
-      const alasan = item.alasan ? truncateText(item.alasan, 50) : "N/A";
-      const rekomendasiAi = item.rekomendasi_ai ? truncateText(item.rekomendasi_ai, 50) : "N/A";
-  
-      card.innerHTML = `
+  const chartRow = document.getElementById("chartRow");
+  chartRow.innerHTML = ""; // Clear existing content
+
+  data.forEach((item) => {
+    const card = document.createElement("div");
+    card.className = "col-md-6 col-lg-3 mb-4";
+
+    const asalDaerah = item.asal_daerah || "N/A";
+    const kondisi = item.kondisi !== null ? item.kondisi + "%" : "N/A";
+    const alasan = item.alasan ? truncateText(item.alasan, 50) : "N/A";
+    const rekomendasiAi = item.rekomendasi_ai ? truncateText(item.rekomendasi_ai, 50) : "N/A";
+
+    card.innerHTML = `
         <a href="ReviewProvSpesific.html?id=${item.rekomendasi_ke}&&tipe=${type}" style="text-decoration: none; color: inherit; display: block;">
           <div class="card" style="width: 18rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;"
             onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.2)';" 
@@ -147,10 +153,10 @@ function populateCards(data, type) {
           </div>
         </a>
       `;
-  
-      chartRow.appendChild(card);
-    });
-  }
+
+    chartRow.appendChild(card);
+  });
+}
 
 function updatePaginationControls() {
   const paginationControls = document.querySelector(".pagination");
@@ -159,9 +165,8 @@ function updatePaginationControls() {
   const previousPageButton = document.createElement("li");
   previousPageButton.classList.add("page-item");
   if (currentPage <= 1) {
-    previousPageButton.classList.add('disabled')
-    
-}
+    previousPageButton.classList.add("disabled");
+  }
   const previousPageLink = document.createElement("a");
   previousPageLink.classList.add("page-link");
   previousPageLink.href = "#";
@@ -175,7 +180,6 @@ function updatePaginationControls() {
   paginationControls.appendChild(previousPageButton);
 
   for (let i = 1; i <= totalPages; i++) {
-
     if (currentPage == i) {
       const pageButton = document.createElement("li");
       pageButton.classList.add("page-item");
@@ -186,12 +190,10 @@ function updatePaginationControls() {
       pageLink.textContent = i;
       pageButton.appendChild(pageLink);
       pageButton.addEventListener("click", () => {
-        fetchReviewData(selectedType,i);
+        fetchReviewData(selectedType, i);
       });
       paginationControls.appendChild(pageButton);
-      
-    }else{
-
+    } else {
       const pageButton = document.createElement("li");
       pageButton.classList.add("page-item");
       const pageLink = document.createElement("a");
@@ -200,7 +202,7 @@ function updatePaginationControls() {
       pageLink.textContent = i;
       pageButton.appendChild(pageLink);
       pageButton.addEventListener("click", () => {
-        fetchReviewData(selectedType,i);
+        fetchReviewData(selectedType, i);
       });
       paginationControls.appendChild(pageButton);
     }
@@ -209,9 +211,8 @@ function updatePaginationControls() {
   const nextPageButton = document.createElement("li");
   nextPageButton.classList.add("page-item");
   if (currentPage == totalPages) {
-    nextPageButton.classList.add('disabled')
-    
-}
+    nextPageButton.classList.add("disabled");
+  }
   const nextPageLink = document.createElement("a");
   nextPageLink.classList.add("page-link");
   nextPageLink.href = "#";
