@@ -43,7 +43,8 @@ function createButton(container, number, imgSrc, caption, percentage) {
 
     // Create button element
     const button = document.createElement('button');
-    button.className = 'btnn';
+    button.className = 'btnn d-flex justify-content-between';
+    button.style.width = '100%';
 
     // Create number span
     const numberSpan = document.createElement('span');

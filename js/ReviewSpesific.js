@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const generateReviewBtn = document.getElementById('generateReviewBtn');
     const loadingBtn = document.getElementById('loadingBtn');
 
-    generateReviewBtn.addEventListener('click', () => generateNewReview(selectedType));
+    generateReviewBtn.addEventListener('click', () => generateNewReview(selectedType,rekomendasi_ke));
 
     const dropdownItems = document.querySelectorAll('.dropdown-item');
     dropdownItems.forEach(item => {
@@ -65,7 +65,7 @@ async function fetchReviewData(type,rekomendasi_ke) {
     }
 }
 
-async function generateNewReview(type) {
+async function generateNewReview(type,id) {
     const generateReviewBtn = document.getElementById('generateReviewBtn');
     const loadingBtn = document.getElementById('loadingBtn');
 
@@ -73,7 +73,7 @@ async function generateNewReview(type) {
 
     try {
         showLoading(generateReviewBtn, loadingBtn);
-        const response = await fetch(`http://localhost:3002/askAi?tipe=${type}`, { // Fixed the typo here
+        const response = await fetch(`http://localhost:3002/askAi/${id}?tipe=${type}`, { // Fixed the typo here
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ async function generateNewReview(type) {
         }
         const responseData = await response.json();
         console.log(responseData);
-        await fetchReviewData(type);
+        await fetchReviewData(type,id);
     } catch (error) {
         console.error('Error:', error);
     } finally {

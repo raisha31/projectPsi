@@ -121,8 +121,10 @@ function populateCards(data,type) {
         const card = document.createElement('div');
         card.className = 'col-md-6 col-lg-3 mb-4';
         card.innerHTML = `
-           <a href="ReviewProvSpesific.html?id=${item.rekomendasi_ke}&&tipe=${type}">
-                <div class="card" style="width: 18rem;">
+           <a href="ReviewProvSpesific.html?id=${item.rekomendasi_ke}&&tipe=${type}" style="text-decoration: none; color: inherit; display: block;">
+                <div class="card" style="width: 18rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;"
+                    onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 4px 8px rgba(0, 0, 0, 0.2)';" 
+                    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
                     <div class="card-body">
                         <h5 class="card-title">${item.asal_daerah}</h5>
                         <p class="card-text">Kondisi: ${item.kondisi}%</p>
@@ -131,6 +133,7 @@ function populateCards(data,type) {
                     </div>
                 </div>
             </a>
+
         `;
         chartRow.appendChild(card);
     });
