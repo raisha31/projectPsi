@@ -87,6 +87,11 @@ function updatePaginationControls() {
 
     const previousPageButton = document.createElement('li');
     previousPageButton.classList.add('page-item');
+
+    if (currentPage <= 1) {
+        previousPageButton.classList.add('disabled')
+        
+    }
     const previousPageLink = document.createElement('a');
     previousPageLink.classList.add('page-link');
     previousPageLink.href = '#';
@@ -100,21 +105,43 @@ function updatePaginationControls() {
     paginationControls.appendChild(previousPageButton);
 
     for (let i = 1; i <= totalPages; i++) {
-        const pageButton = document.createElement('li');
-        pageButton.classList.add('page-item');
-        const pageLink = document.createElement('a');
-        pageLink.classList.add('page-link');
-        pageLink.href = '#';
-        pageLink.textContent = i;
-        pageButton.appendChild(pageLink);
-        pageButton.addEventListener('click', () => {
-            fetchData(i, pageSize);
-        });
-        paginationControls.appendChild(pageButton);
-    }
+
+        if (currentPage == i) {
+          const pageButton = document.createElement("li");
+          pageButton.classList.add("page-item");
+          pageButton.classList.add("active");
+          const pageLink = document.createElement("a");
+          pageLink.classList.add("page-link");
+          pageLink.href = "#";
+          pageLink.textContent = i;
+          pageButton.appendChild(pageLink);
+          pageButton.addEventListener("click", () => {
+            fetchReviewData(selectedType,i);
+          });
+          paginationControls.appendChild(pageButton);
+          
+        }else{
+    
+          const pageButton = document.createElement("li");
+          pageButton.classList.add("page-item");
+          const pageLink = document.createElement("a");
+          pageLink.classList.add("page-link");
+          pageLink.href = "#";
+          pageLink.textContent = i;
+          pageButton.appendChild(pageLink);
+          pageButton.addEventListener("click", () => {
+            fetchReviewData(selectedType,i);
+          });
+          paginationControls.appendChild(pageButton);
+        }
+      }
 
     const nextPageButton = document.createElement('li');
     nextPageButton.classList.add('page-item');
+    if (currentPage == totalPages) {
+        nextPageButton.classList.add('disabled')
+        
+    }
     const nextPageLink = document.createElement('a');
     nextPageLink.classList.add('page-link');
     nextPageLink.href = '#';
