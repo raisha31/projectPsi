@@ -90,8 +90,10 @@ async function generateNewReview(type) {
     const responseData = await response.json();
     console.log(responseData);
     await fetchReviewData(type);
+    showToast("success", "New review generated successfully");
   } catch (error) {
     console.error("Error:", error);
+    showToast("error", "Failed to generate new review");
   } finally {
     hideLoading(generateReviewBtn, loadingBtn);
   }
@@ -228,4 +230,10 @@ function updatePaginationControls() {
   // Update text showing the current page and total number of pages
   const pageInfoText = document.querySelector("#paginationText");
   pageInfoText.textContent = `You are on page ${currentPage} of ${totalPages}`;
+}
+
+function showToast(type, message) {
+  const toastElement = type === "success" ? document.getElementById('toastSuccess') : document.getElementById('toastError');
+  const toast = new bootstrap.Toast(toastElement);
+  toast.show();
 }

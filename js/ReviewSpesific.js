@@ -95,8 +95,10 @@ async function generateNewReview(type, id) {
     const responseData = await response.json();
     console.log(responseData);
     await fetchReviewData(type, id);
+    showToast("success", "New review generated successfully");
   } catch (error) {
     console.error("Error:", error);
+    showToast("error", "Failed to generate new review");
   } finally {
     hideLoading(generateReviewBtn, loadingBtn);
   }
@@ -151,6 +153,17 @@ function populateCards(data) {
   });
 }
 
+
+function showToast(type, message) {
+  const toastElement = type === "success" ? document.getElementById('toastSuccess') : document.getElementById('toastError');
+  const toastBody = toastElement.querySelector('.toast-body');
+  toastBody.textContent = message; // Set the message
+  const toast = new bootstrap.Toast(toastElement);
+  toast.show();
+}
+
+
+
 function sendMessage(rekomendasi_ke, pesan) {
   // Define the message data
   const messageData = {
@@ -178,10 +191,10 @@ function sendMessage(rekomendasi_ke, pesan) {
     .then((response) => response.json())
     .then((data) => {
       console.log("Success:", data);
-      alert("Message sent successfully!");
+      showToast("success", "Message Send Successfully");
     })
     .catch((error) => {
       console.error("Error:", error);
-      alert("Error sending message");
+      showToast("error", "Failed to Send Message");
     });
 }

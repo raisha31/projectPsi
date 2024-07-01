@@ -27,8 +27,8 @@ function populateInbox(inboxItems) {
     inboxList.innerHTML = ''; // Clear the list before populating
 
     inboxItems.forEach(item => {
-        const createdAt = new Date(item.created_at);
-        const timeString = createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        // const createdAt = new Date(item.created_at);
+        // const timeString = createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
         const inboxItem = document.createElement('a');
         inboxItem.href = `Mail2.html?id=${item.id}`;
@@ -36,7 +36,7 @@ function populateInbox(inboxItems) {
         inboxItem.innerHTML = `
             <div class="row d-flex justify-content-between">
                 <div class="col-md-6 InboxSender">${item.asal_daerah}</div>
-                <div class="col-md-3 InboxTime">${timeString}</div>
+                <div class="col-md-3 InboxTime">${item.created_at}</div>
             </div>
             <div class="row">
                 <div class="col-md-6 InboxSubject">Hasil Rekomendasi</div>
