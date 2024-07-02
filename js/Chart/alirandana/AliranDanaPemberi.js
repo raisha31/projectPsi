@@ -2,7 +2,7 @@ let currentPage = 1;
 let totalPages = 1;
 const pageSize = 10;
 
-async function fetchData(page = 1, limit = 10) {
+async function fetchData(page = 1, limit = 10,searchQuery = "") {
   try {
     const accessToken = getCookie("access_token");
 
@@ -12,7 +12,7 @@ async function fetchData(page = 1, limit = 10) {
       return;
     }
 
-    const response = await fetch(`http://localhost:3002/data/pemberi/keuangans?page=${page}&limit=${limit}`, {
+    const response = await fetch(`http://localhost:3002/data/pemberi/keuangans?page=${page}&limit=${limit}&search=${searchQuery}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -114,7 +114,7 @@ function updatePaginationControls() {
       pageLink.textContent = i;
       pageButton.appendChild(pageLink);
       pageButton.addEventListener("click", () => {
-        fetchReviewData(selectedType, i);
+        fetchData(i);
       });
       paginationControls.appendChild(pageButton);
     } else {
@@ -126,7 +126,7 @@ function updatePaginationControls() {
       pageLink.textContent = i;
       pageButton.appendChild(pageLink);
       pageButton.addEventListener("click", () => {
-        fetchReviewData(selectedType, i);
+        fetchData(i);
       });
       paginationControls.appendChild(pageButton);
     }
@@ -175,4 +175,23 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "/login.html";
     return;
   }
+
+    // Add event listener to the search input with debounce
+    const searchInput = document.querySelector(".search-input");
+    const debouncedFetch = debounce(() => {
+      const searchQuery = searchInput.value.trim();
+      fetchData(1,pageSize, searchQuery);
+    }, 1000); // 1 second debounce time
+  
+    searchInput.addEventListener("input", debouncedFetch);
 });
+
+
+function debounce(func, delay) {
+  let timeout;
+  return function(...args) {
+    const context = this;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(context, args), delay);
+  };
+}

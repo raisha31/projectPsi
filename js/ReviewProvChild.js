@@ -30,9 +30,20 @@ document.addEventListener("DOMContentLoaded", () => {
       fetchReviewData(selectedType);
     });
   });
+
+  // Add event listener to the search input with debounce
+  const searchInput = document.querySelector(".search-input");
+  const debouncedFetch = debounce(() => {
+    const searchQuery = searchInput.value.trim();
+    fetchReviewData(selectedType, 1, searchQuery);
+  }, 1000); // 1 second debounce time
+
+  searchInput.addEventListener("input", debouncedFetch);
 });
 
-async function fetchReviewData(type, page = 1) {
+
+
+async function fetchReviewData(type, page = 1, searchQuery = "") {
   console.log("Attempting to fetch data...");
   const accessToken = getCookie("access_token");
 
@@ -42,7 +53,7 @@ async function fetchReviewData(type, page = 1) {
   }
 
   try {
-    const response = await fetch(`http://localhost:3002/rekomendasiAI?type=${type}&page=${page}&limit=${pageSize}`, {
+    const response = await fetch(`http://localhost:3002/rekomendasiAI?type=${type}&page=${page}&limit=${pageSize}&search=${searchQuery}`, {
       method: "GET",
       headers: {
         Authorization: "Bearer " + accessToken,
@@ -237,3 +248,13 @@ function showToast(type, message) {
   const toast = new bootstrap.Toast(toastElement);
   toast.show();
 }
+
+function debounce(func, delay) {
+  let timeout;
+  return function(...args) {
+    const context = this;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(context, args), delay);
+  };
+}
+
