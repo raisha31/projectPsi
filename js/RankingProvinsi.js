@@ -12,7 +12,7 @@ async function fetchData(page = 1, limit = 10) {
             return;
         }
 
-        const response = await fetch(`http://localhost:3002/rekomendasiAI?page=${page}&limit=${limit}`, {
+        const response = await fetch(`http://localhost:3002/rekomendasiAI?page=${page}&limit=${limit}&type=Keuangan`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             },
